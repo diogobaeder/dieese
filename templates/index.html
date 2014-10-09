@@ -1,0 +1,21 @@
+<head>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://dimplejs.org/dist/dimple.v2.1.0.min.js"></script>
+</head>
+<body>
+  <script type="text/javascript">
+    var svg = dimple.newSvg("body", 1440, 900);
+    var data = {{ data|safe }};
+    var chart = new dimple.chart(svg, data);
+    var x = chart.addTimeAxis("x", 'Data', '%Y-%m', '%Y');
+    x.addOrderRule("year");
+    var salaries = chart.addMeasureAxis("y", "Salário");
+    var relations = chart.addMeasureAxis("y", "Relação");
+    var salarySeries = chart.addSeries('Tipo', dimple.plot.line, [x, salaries]);
+    var relationsSeries = chart.addSeries('Nome', dimple.plot.line, [x, relations]);
+    salaries.tickFormat = '.2f';
+    relations.tickFormat = '.2f';
+    chart.addLegend(60, 10, 500, 20, "right");
+    chart.draw();
+  </script>
+</body>
